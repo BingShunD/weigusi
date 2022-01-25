@@ -1,2 +1,7 @@
 # Project exclude paths
 /target/
+.idea/
+data/
+logs/
+output/
+
