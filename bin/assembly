@@ -1,0 +1,25 @@
+#!/bin/bash
+# 生成上线专用的jar包
+
+DATASYSNC_HOME="$(cd `dirname "${BASH_SOURCE-$0}"`/..; pwd)"
+cd ${DATASYSNC_HOME}
+
+DATE=`date "+%Y%m%d%H"`
+BRANCH=$(git branch | grep '*' | awk '{print $NF}')
+
+sbt 'set test in assembly := {}' clean assembly
+if [ $? -eq 0 ]; then
+    TARGET=${DATASYSNC_HOME}/datasysnc-${BRANCH}_${DATE}.jar
+    mv target/scala-2.13/datasysnc-assembly-*.jar ${TARGET}
+
+    echo
+    echo "Make assembly of datasysnc: ${TARGET} done!"
+    echo
+    echo "Now, you can run datasysnc like this:"
+    echo "java -jar ${TARGET}"
+    echo
+    echo "or upgrade online/offline datasysnc service like:"
+    echo "bin/upgrade.sh ${TARGET}"
+else
+    echo "could not make assembly of datasysnc !!!"
+fi
