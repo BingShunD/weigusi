@@ -169,9 +169,9 @@ class FlinkxService extends LazyLogging {
     val spark = SparkSQLEnv.sparkSession
     val df = spark.sql(sql)
     val l = df.count()
-//    val tuple = formatAsJsonAndReturnLength(df)
-//    val value = tuple._1
-    val value = "adasd"
+    val tuple = formatAsJsonAndReturnLength(df)
+    val value = tuple._1
+    //val value = "adasd"
 
     ("jobId" -> sql) ~ ("status" -> value)
   }
@@ -183,7 +183,7 @@ class FlinkxService extends LazyLogging {
    * @return
    */
   protected def formatAsJsonAndReturnLength(df: DataFrame, limitStart: Int = -1, limitEnd: Int = -1,
-                                            limitRows: Int = 0): (Seq[ArrayBuffer[Any]], Int) = {
+                                            limitRows: Int = 0): (Seq[ArrayBuffer[String]], Int) = {
 
     val start = if (limitStart >= 0) limitStart else 0
 
@@ -212,7 +212,7 @@ class FlinkxService extends LazyLogging {
           data.map(elm => {
             elm match {
               case null => "null"
-              case i : Double => '"' + i + '"'
+              case i : Double => s"$i"
               case i: Timestamp => s"${sdf.format(i)}"
               case _ => '"' + elm.toString + '"'
             }})
@@ -221,7 +221,7 @@ class FlinkxService extends LazyLogging {
           if (d != null) {
             d match {
               case i: Double =>
-                i
+                s"$i"
               case i: Timestamp => sdf.format(i)
               case _ =>
                 d.toString
