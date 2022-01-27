@@ -4,6 +4,8 @@ import java.io.{BufferedReader, IOException, InputStreamReader}
 import java.sql.{Connection, DriverManager, ResultSet, ResultSetMetaData, SQLException, Timestamp}
 import java.text.SimpleDateFormat
 
+import com.haizhi.weigusi.model.User
+
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.util.Try
 import org.json4s._
@@ -174,6 +176,13 @@ class FlinkxService extends LazyLogging {
     //val value = "adasd"
 
     ("jobId" -> sql) ~ ("status" -> value)
+  }
+
+  def mysql(sql : String) : JValue = {
+    implicit val formats = DefaultFormats
+    val name = User.findBy("name", sql).get
+    //val value = "adasd"
+    ("jobId" -> sql) ~ ("status" -> name.toString)
   }
 
   /**

@@ -40,7 +40,8 @@ class flinkxApi extends ApiComponent with LazyLogging {
     "/start" -> start,
     "/stop" -> stop,
     "/status" -> status,
-    "/query" -> query
+    "/query" -> query,
+    "/mysql" -> mysql
   )
 
   @POST
@@ -153,6 +154,31 @@ class flinkxApi extends ApiComponent with LazyLogging {
   def query: Responder[JValue] = (request: HttpServletRequest) => {
     val sql = request.get("sql")
     val res = flinkxService.query(sql)
+    ("status" -> "0") ~ ("errstr" -> "") ~ ("result" -> res)
+  }
+
+  @POST
+  @Path(value = "/mysql")
+  @Operation(
+    summary = "触发当前表导出任务",
+    description = "触发当前导出任务",
+    parameters = Array(
+      new Parameter(
+        name = "sql",
+        in = ParameterIn.QUERY,
+        description = "sql",
+        required = true,
+        array = new ArraySchema(
+          schema = new Schema(implementation = classOf[String])
+        )
+      )
+    )
+  )
+  @Produces(value = Array("application/json"))
+  @Consumes(value = Array("application/json"))
+  def mysql: Responder[JValue] = (request: HttpServletRequest) => {
+    val sql = request.get("sql")
+    val res = flinkxService.mysql(sql)
     ("status" -> "0") ~ ("errstr" -> "") ~ ("result" -> res)
   }
 

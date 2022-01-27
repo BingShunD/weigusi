@@ -17,6 +17,7 @@ object Main extends LazyLogging {
     logger.info(DatasysncConf.getPropeties())
     logger.info("------------datasysnc config info end-----------------------")
 
+    Tables.initialize
     SparkSQLEnv.init()
     listenShutdown()
     RestServer.start()
@@ -32,6 +33,8 @@ object Main extends LazyLogging {
             SparkSQLEnv.stop()
             Thread.sleep(2000)
             RestServer.stop()
+            Thread.sleep(2000)
+            Tables.cleanup
             Thread.sleep(2000)
           }
         }
