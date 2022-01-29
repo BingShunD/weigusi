@@ -68,6 +68,12 @@ object DatasysncConf {
   val flinkxUrl = getConf[String]("flinkx.url", "http://localhost:8081")
 
   val flinkxChannel = getConf[Int]("speed.channel", 1)
+
+  val redisHost = getConf[String]("redis.host","localhost")
+
+  val redisPort = getConf[Int]("redis.port")
+
+  val redisPassword = getConf[String]("redis.password")
 }
 
 

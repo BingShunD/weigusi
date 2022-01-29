@@ -166,6 +166,8 @@ class FlinkxService extends LazyLogging {
   }
 
 
+  //curl localhost:8493/flinkx/query -d 'sql=select * from duanbs.employee'
+  //hive,redis,mysql
   def query(sql : String) : JValue = {
     implicit val formats = DefaultFormats
     val spark = SparkSQLEnv.sparkSession
@@ -175,7 +177,11 @@ class FlinkxService extends LazyLogging {
     val value = tuple._1
     //val value = "adasd"
 
-    ("jobId" -> sql) ~ ("status" -> value)
+    val maybeString = RedisService.getValue("name")
+
+    val name = User.findBy("name", "zhangsan").get
+
+    ("jobId" -> sql) ~ ("status" -> value) ~ ("redisName",maybeString.get) ~ ("mysqlValue",name.toString)
   }
 
   def mysql(sql : String) : JValue = {
