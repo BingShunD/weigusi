@@ -36,7 +36,7 @@ object ExportByJdbc {
       s"cast(null as integer) as `grand`",
       s"cast(word as integer) as `game`",
       s"cast(word as string) as `lol`",
-      s"cast(count as integer) as `chiji`",
+      s"cast(count as integer) as `chiji`"
     )
 
     val selectArr = dfFields.map(name => s"`${name}`") ++ addFields

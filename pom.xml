@@ -24,8 +24,12 @@
     </repositories>
 
     <properties>
-        <scala.version>2.12.10</scala.version>
-        <scala.binary.version>2.12</scala.binary.version>
+<!--        <scala.version>2.12.10</scala.version>-->
+<!--        <scala.binary.version>2.12</scala.binary.version>-->
+
+        <scala.version>2.11.12</scala.version>
+        <scala.binary.version>2.11</scala.binary.version>
+
         <spark.version>2.4.5</spark.version>
         <hbase.version>1.4.9</hbase.version>
     </properties>
@@ -163,7 +167,7 @@
 
         <dependency>
             <groupId>com.github.aselab</groupId>
-            <artifactId>scala-activerecord_2.12</artifactId>
+            <artifactId>scala-activerecord_${scala.binary.version}</artifactId>
             <version>0.4.0</version>
         </dependency>
 
@@ -188,6 +192,22 @@
             <artifactId>guava</artifactId>
             <version>20.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>6.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>6.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-spark-20_2.11</artifactId>
+            <version>7.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -201,6 +221,26 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <configuration>-->
+<!--                    <configLocation>checkstyle.xml</configLocation>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>checkstyle</id>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <failOnViolation>true</failOnViolation>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

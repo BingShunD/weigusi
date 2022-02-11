@@ -152,7 +152,7 @@ class FlinkxService extends LazyLogging {
     logger.info("asdasdasd")
    val mapaaa = Map(
       "name" -> "jm",
-      "age" -> "17",
+      "age" -> "17"
     )
     val list = List(mapaaa)
 
